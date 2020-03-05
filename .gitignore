@@ -30,4 +30,3 @@ build/
 ### VS Code ###
 .vscode/
 /springboot_demo.iml
-/src/test/
