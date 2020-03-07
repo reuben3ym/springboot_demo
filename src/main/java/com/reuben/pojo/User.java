@@ -1,4 +1,4 @@
-package com.reuben.bean;
+package com.reuben.pojo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,9 +10,9 @@ import java.io.Serializable;
 @Component
 @ConfigurationProperties(prefix = "user")
 public class User implements Serializable {
-    @ApiModelProperty(value="用户名",name="userName",example="xingguo")
+    @ApiModelProperty(value="用户名",name="userName",example="reuben")
     private String userName;
-    @ApiModelProperty(value="密码",name="userPassword",example="xingguo")
+    @ApiModelProperty(value="密码",name="userPassword",example="reuben")
     private String userPassword;
 
     public User() {
