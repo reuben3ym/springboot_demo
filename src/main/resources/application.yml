@@ -1,2 +1,6 @@
 server:
   port: 8081
+#user_default
+user:
+  userName: default_userName
+  userPassword: default_userPassword
