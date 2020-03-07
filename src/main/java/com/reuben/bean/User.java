@@ -2,9 +2,13 @@ package com.reuben.bean;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 @ApiModel(value="user对象",description="用户对象user")
+@Component
+@ConfigurationProperties(prefix = "user")
 public class User implements Serializable {
     @ApiModelProperty(value="用户名",name="userName",example="xingguo")
     private String userName;
