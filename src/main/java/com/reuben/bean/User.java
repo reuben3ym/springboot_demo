@@ -1,11 +1,14 @@
 package com.reuben.bean;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-public class User {
-    @ApiModelProperty(value = "name")
+import java.io.Serializable;
+@ApiModel(value="user对象",description="用户对象user")
+public class User implements Serializable {
+    @ApiModelProperty(value="用户名",name="userName",example="xingguo")
     private String userName;
-    @ApiModelProperty(value = "password")
+    @ApiModelProperty(value="密码",name="userPassword",example="xingguo")
     private String userPassword;
 
     public User() {
