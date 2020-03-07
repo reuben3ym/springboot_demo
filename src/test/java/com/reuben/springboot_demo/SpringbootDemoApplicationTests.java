@@ -1,6 +1,6 @@
 package com.reuben.springboot_demo;
 
-import com.reuben.bean.User;
+import com.reuben.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
