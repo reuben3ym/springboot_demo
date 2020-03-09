@@ -4,3 +4,4 @@ server:
 user:
   userName: default_userName
   userPassword: default_userPassword
+  email: default_email@email.cn
