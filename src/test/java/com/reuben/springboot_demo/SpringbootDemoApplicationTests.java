@@ -3,20 +3,23 @@ package com.reuben.springboot_demo;
 import com.reuben.pojo.User;
 
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testng.annotations.Test;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-class SpringbootDemoApplicationTests {
+public class SpringbootDemoApplicationTests {
     @Autowired
     private User user;
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 		System.out.println("this is a test");
 	}
 	@Test
-	void test_default_user(){
+	public void test_default_user(){
         System.out.println(user);
     }
 
