@@ -5,7 +5,6 @@ import com.reuben.pojo.User;
 import com.reuben.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
