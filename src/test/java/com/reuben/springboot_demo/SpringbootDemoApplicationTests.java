@@ -1,26 +1,28 @@
 package com.reuben.springboot_demo;
 
-import com.reuben.pojo.User;
 
 
-import org.junit.Test;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class SpringbootDemoApplicationTests {
-    @Autowired
-    private User user;
-	@Test
-	public void contextLoads() {
-		System.out.println("this is a test");
+
+	@Before
+	public void init(){
+		System.out.println("start testing--------");
 	}
-	@Test
-	public void test_default_user(){
-        System.out.println(user);
-    }
+
+	@After
+	public void after(){
+		System.out.println("End of test--------");
+	}
+
 
 }
