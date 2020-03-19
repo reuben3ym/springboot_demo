@@ -19,9 +19,11 @@ spring:
 ---
 #user_default
 user:
+  user-id: 0
   userName: default_userName
   userPassword: default_userPassword
   email: default_email@email.cn
+  isdel: 0
 ---
 #jpa
 spring:
