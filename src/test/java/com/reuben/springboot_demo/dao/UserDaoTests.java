@@ -4,8 +4,10 @@ import com.reuben.dao.UserDao;
 import com.reuben.pojo.User;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,7 +25,9 @@ public class UserDaoTests extends SpringbootDemoApplicationTests {
     @Test
     public void testFindById() {
         Optional<User> byUserId = userDao.findById(1);
-        log.info(byUserId.toString());
+        System.out.println(byUserId.isPresent());
+        Assert.assertTrue(true == byUserId.isPresent());
+        //log.info(byUserId.toString());
     }
 
     /**
@@ -33,7 +37,8 @@ public class UserDaoTests extends SpringbootDemoApplicationTests {
     public void testFindByuserName() {
         String ts_userName = "da";
         List<User> da = userDao.findByUserName(ts_userName);
-        log.info(da.toString());
+        Assert.assertTrue(da.size() > 0);
+        //log.info(da.toString());
     }
 
     /**
@@ -41,18 +46,22 @@ public class UserDaoTests extends SpringbootDemoApplicationTests {
      */
     @Test
     public void testSave() {
-        User te_user = new User("ceshi",
-                "233",
-                "qq@qq.com");
-        userDao.save(te_user);
+        User ts_user = new User("test",
+                "test",
+                "test@mail.com");
+        userDao.save(ts_user);
+        Assert.assertTrue(ts_user.getUserId() > 0);
     }
 
     /**
      * @Description: 测试逻辑删除
      */
     @Test
+    //@Rollback(false)
     public void testDeleteByuserId() {
-        int ts_userId = 3;
+        int ts_userId = 14;
         userDao.deleteByUserId(ts_userId);
+        Optional<User> byId = userDao.findById(ts_userId);
+        Assert.assertEquals("1", byId.get().getIsdel());
     }
 }
