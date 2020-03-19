@@ -1,7 +1,6 @@
 package com.reuben.springboot_demo;
 
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
@@ -14,15 +13,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Slf4j
 public class SpringbootDemoApplicationTests {
 
-	@Before
-	public void init(){
-		System.out.println("start testing--------");
-	}
+    @Before
+    public void init() {
+        log.info("--------start testing------");
+    }
 
-	@After
-	public void after(){
-		System.out.println("End of test--------");
-	}
+    @After
+    public void after() {
+        log.info("--------End of test--------");
+    }
 
 
 }
