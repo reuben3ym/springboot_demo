@@ -3,6 +3,7 @@ package com.reuben.springboot_demo.pojo;
 import com.reuben.pojo.User;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +19,9 @@ public class UserTests extends SpringbootDemoApplicationTests {
     private User user_default;
 
     @Test
-    public void test_toString(){
-        log.info(user_default.toString());
+    public void test_toString() {
+        Assert.assertEquals("default_userName",
+                user_default.getUserName());
+        //log.info(user_default.toString());
     }
 }
