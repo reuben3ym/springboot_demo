@@ -6,13 +6,13 @@ import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-/*@RunWith(SpringRunner.class)
-@SpringBootTest*/
 @Slf4j
+@Transactional
 public class UserDaoTests extends SpringbootDemoApplicationTests {
     @Autowired
     private UserDao userDao;
