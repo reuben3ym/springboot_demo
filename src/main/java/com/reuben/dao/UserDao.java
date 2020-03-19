@@ -33,4 +33,20 @@ public interface UserDao extends JpaRepository<User, Integer> {
     @Modifying
     @Query(name = "deleteByUserId", nativeQuery = true, value = "update tb_user set isdel = '1' where id= :userId")
     void deleteByUserId(@Param("userId") Integer userId);
+
+    /**
+     * @Description: update
+     * @Param: [id, user_name, user_password, email]
+     * @return: void
+     */
+    @Transactional
+    @Modifying
+    @Query(name = "update", nativeQuery = true, value = "update tb_user set user_name = :user_name," +
+            "user_password=:user_password,email=:email " +
+            "where id=:id")
+    void update(@Param("id") Integer id,
+                @Param("user_name") String user_name,
+                @Param("user_password") String user_password,
+                @Param("email") String email);
+
 }
