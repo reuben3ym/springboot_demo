@@ -6,10 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
-import springfox.documentation.annotations.ApiIgnore;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -30,7 +29,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//主键自增
     @Column(name = "id")
-    @ApiModelProperty(value = "userId",hidden = true)
+    @ApiModelProperty(value = "userId", hidden = false)
     private Integer userId;
 
     @ApiModelProperty(value = "用户名", name = "userName", example = "reuben")
@@ -51,7 +50,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "isdel")
-    @ApiModelProperty(value = "逻辑删除，默认0",hidden = true)
+    @ApiModelProperty(value = "逻辑删除，默认0", hidden = true)
     private String isdel;//是否删除:1删除，0未删除
 
 
