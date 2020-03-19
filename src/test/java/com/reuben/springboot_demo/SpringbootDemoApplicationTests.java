@@ -22,7 +22,7 @@ public class SpringbootDemoApplicationTests {
 
     @Before
     public void init() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
+        mvc = MockMvcBuilders.webAppContextSetup(context).build();//构造MockMvc
         log.info("--------start testing------");
     }
 
