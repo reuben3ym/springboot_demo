@@ -27,20 +27,23 @@ public class UserServiceImpl implements UserService {
     //初始化Jackson的ObjectMapper
     private ObjectMapper mapper = new ObjectMapper();
 
-    @Override
-
     /**
      * @Description: 添加User
      * @Param: [user]
      * @return: java.lang.String
      */
+    @Override
     public String save(User user) {
-        if (null != user && 0 != user.getUserName().length()) {
+        //判断数据是否为空
+        if (isNull(user)) {
+            return "No data received!";
+        }
+        //判断是否存在相同用户名
+        if (!isExist(user.getUserName())) {
             user.setIsdel("0");//默认未删除
             userDao.save(user);
             return "save Success";
-        } else
-            return "false";
+        } else return "Username already exists!";
 
     }
 
@@ -80,7 +83,6 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     public String deleteByUserId(Integer id) {
-
         Optional<User> byId = userDao.findById(id);//通过id查询是否存在
         //log.info(String.valueOf(byId.isPresent()));
 
@@ -100,24 +102,58 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @SneakyThrows
-    @Override
-
     /**
      * @Description: update
      * @Param: [user]
      * @return: java.lang.String
      */
+    @SneakyThrows
+    @Override
     public String update(User user) {
-        //System.out.println(user);
-        userDao.update(user.getUserId(),
-                user.getUserName(),
-                user.getUserPassword(),
-                user.getEmail());
+        //log.info(user.toString());
+        if (isNull(user)) {
+            return "No data received!";
+        }
+        if (isExist(user.getUserName())) {
+            msgAndData.setMessage("Update failed!: userName already exists!");
+        } else {
+            userDao.update(user.getUserId(),
+                    user.getUserName(),
+                    user.getUserPassword(),
+                    user.getEmail());
 
-        msgAndData.setMessage("update Success!");
-        msgAndData.setData(userDao.findById(user.getUserId()).get().toString());
+            msgAndData.setMessage("update Success!");
+            msgAndData.setData(userDao.findById(user.getUserId()).get().toString());
+        }
         String result = mapper.writeValueAsString(msgAndData);
         return result;
+    }
+
+    /**
+     * @Description: 判断用户名是否存在
+     * @Param: [userName]
+     * @return: Boolean
+     */
+    private Boolean isExist(String userName) {
+        boolean flag = false;
+        List<User> byUserName = userDao.findByUserName(userName);
+        if (byUserName.size() > 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    /**
+     * @Description: 判断数据是否为空
+     * @Param: [user]
+     * @return: Boolean
+     */
+    private Boolean isNull(User user) {
+        boolean flag = false;
+        log.info(user.toString());
+        if (null == user || null == user.getUserId() || 0 == user.getUserName().length()) {
+            flag = true;
+        }
+        return flag;
     }
 }
