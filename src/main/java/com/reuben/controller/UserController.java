@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController("/user")
 @Api(tags = "User相关api")
@@ -73,6 +75,13 @@ public class UserController {
         return userService.deleteByUserId(id);
     }
 
+    @PostMapping("/multipleDeleteByUserId")
+    @ApiOperation(value = "通过id批量删除User", notes = "需要id作为参数", httpMethod = "POST")
+    public String multipleDeleteByUserId(@ApiParam(value = "用户id", required = true)
+                                         @RequestBody List<Integer> ids) {
+        return userService.multipleDeleteByUserId(ids);
+    }
+
     @PostMapping("/update")
     @ApiOperation(value = "修改User", notes = "需要User作为参数", httpMethod = "POST")
     public String update(@ApiParam(value = "userId:id、userName:用户名、userPassword:密码、email:邮箱", required = true)
@@ -83,8 +92,8 @@ public class UserController {
 
     @PostMapping("/page")
     @ApiOperation(value = "条件查询（分页）", notes = "无条件时，参数留空（需要id查询请使用findByUserId)", httpMethod = "POST")
-    public Page<User> findByPage(@ApiParam(value = "无条件时，参数留空（需要id查询请使用findByUserId)",required = true)
-                                     @RequestBody PageParam pageParam) {
+    public Page<User> findByPage(@ApiParam(value = "无条件时，参数留空（需要id查询请使用findByUserId)", required = true)
+                                 @RequestBody PageParam pageParam) {
         return userService.findByPage(pageParam);
     }
 

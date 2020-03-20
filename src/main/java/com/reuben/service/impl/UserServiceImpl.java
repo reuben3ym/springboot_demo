@@ -124,6 +124,23 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @SneakyThrows
+    @Override
+
+    /**
+    * @Description: Multiple delete批量删除
+    * @Param: [ids]
+    * @return: java.lang.String
+    */
+    public String multipleDeleteByUserId(List<Integer> ids) {
+        List<String> results = new ArrayList<>();
+        for (Integer id : ids) {
+            results.add(this.deleteByUserId(id));
+        }
+        String result = mapper.writeValueAsString(results);
+        return result;
+    }
+
     /**
      * @Description: update
      * @Param: [user]
