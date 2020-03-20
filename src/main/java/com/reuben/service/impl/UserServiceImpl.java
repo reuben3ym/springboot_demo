@@ -2,14 +2,22 @@ package com.reuben.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reuben.dao.UserDao;
+import com.reuben.entity.PageParam;
 import com.reuben.entity.User;
 import com.reuben.entity.MsgAndData;
 import com.reuben.service.UserService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +67,20 @@ public class UserServiceImpl implements UserService {
         String result = mapper.writeValueAsString(all);
         return result;
 
+    }
+
+    /**
+     * @Description: 通过id查询
+     * @Param: [id]
+     * @return: java.lang.String
+     */
+    @SneakyThrows
+    @Override
+    public String findByUserId(Integer id) {
+        Optional<User> byId = userDao.findById(id);
+        // log.info(byId.toString());
+        String result = mapper.writeValueAsString(byId.get());
+        return result;
     }
 
     /**
@@ -130,6 +152,45 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * @Description: 分页条件查询
+     * @Param: [pageParam]
+     * @return: org.springframework.data.domain.Page<com.reuben.entity.User>
+     */
+    @Override
+    public Page<User> findByPage(PageParam pageParam) {
+        //log.info(pageParam.toString());
+        if (pageParam.getPageNum() == null) {
+            pageParam.setPageNum(0);
+        }
+        if (null == pageParam.getPageSize() || 0 == pageParam.getPageSize()) {
+            pageParam.setPageSize(5);
+        }
+
+        Pageable pageable = PageRequest.of(pageParam.getPageNum(), pageParam.getPageSize(), Sort.by(Sort.Direction.ASC, "userId"));
+
+        Specification<User> spec = (Specification<User>) (root, criteriaQuery, criteriaBuilder) -> {
+            ArrayList<Object> pr = new ArrayList<>();
+            if (pageParam.getUser() != null) {
+                if (pageParam.getUser().getUserName() != null) {
+                    pr.add(criteriaBuilder.like(root.get("userName").as(String.class), "%" + pageParam.getUser().getUserName() + "%"));
+                }
+                if (pageParam.getUser().getUserPassword() != null) {
+                    pr.add(criteriaBuilder.like(root.get("userPassword").as(String.class), "%" + pageParam.getUser().getUserPassword() + "%"));
+                }
+                if (pageParam.getUser().getEmail() != null) {
+                    pr.add(criteriaBuilder.like(root.get("email").as(String.class), "%" + pageParam.getUser().getEmail() + "%"));
+                }
+                if (pageParam.getUser().getIsdel() != null) {
+                    pr.add(criteriaBuilder.like(root.get("isdel").as(String.class), "%" + pageParam.getUser().getIsdel() + "%"));
+                }
+            }
+            return criteriaBuilder.and(pr.toArray(new Predicate[pr.size()]));
+
+        };
+        return userDao.findAll(spec, pageable);
+    }
+
+    /**
      * @Description: 判断用户名是否存在
      * @Param: [userName]
      * @return: Boolean
@@ -150,7 +211,7 @@ public class UserServiceImpl implements UserService {
      */
     private Boolean isNull(User user) {
         boolean flag = false;
-        log.info(user.toString());
+        //log.info(user.toString());
         if (null == user || null == user.getUserId() || 0 == user.getUserName().length()) {
             flag = true;
         }

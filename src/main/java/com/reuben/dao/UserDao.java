@@ -3,6 +3,9 @@ package com.reuben.dao;
 import com.reuben.entity.User;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -49,4 +52,6 @@ public interface UserDao extends JpaRepository<User, Integer> {
                 @Param("user_password") String user_password,
                 @Param("email") String email);
 
+    //分页查询
+    Page<User> findAll(Specification<User> spec, Pageable pageable);
 }

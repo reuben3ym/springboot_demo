@@ -1,6 +1,8 @@
 package com.reuben.service;
 
+import com.reuben.entity.PageParam;
 import com.reuben.entity.User;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 
@@ -25,6 +27,13 @@ public interface UserService {
     String findAll();
 
     /**
+     * @Description: 通过id查询
+     * @Param: [id]
+     * @return: java.lang.String
+     */
+    String findByUserId(Integer id);
+
+    /**
      * @Description: 通过id查找
      * @Param: [name]
      * @return: String
@@ -44,4 +53,11 @@ public interface UserService {
      * @return: String
      */
     String update(User user);
+
+    /**
+     * @Description: 分页条件查询
+     * @Param: [pageParam]
+     * @return: org.springframework.data.domain.Page<com.reuben.entity.User>
+     */
+    Page<User> findByPage(PageParam pageParam);
 }
