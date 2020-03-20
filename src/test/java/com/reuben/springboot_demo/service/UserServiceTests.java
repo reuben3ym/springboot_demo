@@ -1,13 +1,16 @@
 package com.reuben.springboot_demo.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.reuben.entity.PageParam;
 import com.reuben.entity.User;
 import com.reuben.service.UserService;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -69,6 +72,14 @@ public class UserServiceTests extends SpringbootDemoApplicationTests {
         user.setUserPassword("test");
         String update = userService.update(user);
         log.info(update);
+    }
+
+    @Test
+    public void test_findByPage() {
+        PageParam pageParam = new PageParam();
+
+        Page<User> byPage = userService.findByPage(pageParam);
+        Assert.assertTrue(byPage.getSize() > 0);
     }
 
 }
