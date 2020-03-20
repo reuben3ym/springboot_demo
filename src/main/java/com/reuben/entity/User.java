@@ -50,7 +50,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "isdel")
-    @ApiModelProperty(value = "逻辑删除，默认0", hidden = true)
+    @ApiModelProperty(value = "逻辑删除，默认0",name = "isdel",example = "0",hidden = false)
     private String isdel;//是否删除:1删除，0未删除
 
 
