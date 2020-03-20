@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
-@ApiModel(value = "user对象", description = "用户对象user")
+@ApiModel(value = "User对象", description = "用户对象user")
 @Component
 @ConfigurationProperties(prefix = "user")
 @Validated
