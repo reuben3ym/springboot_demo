@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class Swagger2Config {
     //配置Swagger信息apiInfo
     private ApiInfo apiInfo(){
         Contact contact = new Contact("reuben", "https://github.com/ReubenYm/", "yuanmaooooo@gmail.com");

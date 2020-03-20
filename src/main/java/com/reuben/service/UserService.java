@@ -1,6 +1,6 @@
 package com.reuben.service;
 
-import com.reuben.pojo.User;
+import com.reuben.entity.User;
 import org.springframework.stereotype.Service;
 
 

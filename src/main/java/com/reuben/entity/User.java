@@ -1,4 +1,4 @@
-package com.reuben.pojo;
+package com.reuben.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -2,8 +2,8 @@ package com.reuben.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reuben.dao.UserDao;
-import com.reuben.pojo.User;
-import com.reuben.pojo.msgAndData;
+import com.reuben.entity.User;
+import com.reuben.entity.MsgAndData;
 import com.reuben.service.UserService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
-    private msgAndData msgAndData;
+    private MsgAndData msgAndData;
     //初始化Jackson的ObjectMapper
     private ObjectMapper mapper = new ObjectMapper();
 

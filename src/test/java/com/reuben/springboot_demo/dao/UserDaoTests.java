@@ -1,13 +1,12 @@
 package com.reuben.springboot_demo.dao;
 
 import com.reuben.dao.UserDao;
-import com.reuben.pojo.User;
+import com.reuben.entity.User;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

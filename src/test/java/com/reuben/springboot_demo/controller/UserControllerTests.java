@@ -2,8 +2,8 @@ package com.reuben.springboot_demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reuben.pojo.User;
-import com.reuben.pojo.msgAndData;
+import com.reuben.entity.User;
+import com.reuben.entity.MsgAndData;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -118,8 +117,8 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
                 .content(mapper.writeValueAsBytes(id));
         MvcResult mvcResult = mvc.perform(content).andReturn();
         //log.info(mvcResult.getResponse().getContentAsString());
-        msgAndData msgAndData = mapper.readValue(mvcResult.getResponse().getContentAsString(),
-                msgAndData.class);
+        MsgAndData msgAndData = mapper.readValue(mvcResult.getResponse().getContentAsString(),
+                MsgAndData.class);
         Assert.assertEquals("delete Success!", msgAndData.getMessage());
 
     }

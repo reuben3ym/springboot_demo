@@ -1,6 +1,6 @@
-package com.reuben.springboot_demo.pojo;
+package com.reuben.springboot_demo.entity;
 
-import com.reuben.pojo.User;
+import com.reuben.entity.User;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;

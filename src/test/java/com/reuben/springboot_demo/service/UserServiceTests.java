@@ -1,7 +1,7 @@
 package com.reuben.springboot_demo.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reuben.pojo.User;
+import com.reuben.entity.User;
 import com.reuben.service.UserService;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.SneakyThrows;

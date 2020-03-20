@@ -1,6 +1,6 @@
 package com.reuben.controller;
 
-import com.reuben.pojo.User;
+import com.reuben.entity.User;
 import com.reuben.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

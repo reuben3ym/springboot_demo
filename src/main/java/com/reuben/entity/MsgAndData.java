@@ -1,4 +1,4 @@
-package com.reuben.pojo;
+package com.reuben.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor//全参构造
 @NoArgsConstructor//无参构造
 @Component
-public class msgAndData implements Serializable {
+public class MsgAndData implements Serializable {
     private String message;
     private String data;
 }

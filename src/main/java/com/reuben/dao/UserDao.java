@@ -1,6 +1,6 @@
 package com.reuben.dao;
 
-import com.reuben.pojo.User;
+import com.reuben.entity.User;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
