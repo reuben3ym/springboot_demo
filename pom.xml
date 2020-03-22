@@ -48,6 +48,18 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
+        <!--java.lang.NumberFormatException: For input string: ""java.lang.NumberFormatException: For input string: ""-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.22</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.22</version>
+        </dependency>
+
         <!--@ConfigurationProperties not found-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
