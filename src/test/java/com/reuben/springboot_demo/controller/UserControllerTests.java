@@ -3,7 +3,6 @@ package com.reuben.springboot_demo.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reuben.entity.User;
-import com.reuben.entity.MsgAndData;
 import com.reuben.springboot_demo.SpringbootDemoApplicationTests;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -73,10 +73,11 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
     @SneakyThrows
     @Test
     public void test_addUser() {
-        content = MockMvcRequestBuilders.post("/addUser")
+        content = MockMvcRequestBuilders.post("/user")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(user_json);
+        //log.info(content.toString());
         MvcResult mvcResult = mvc.perform(content).andReturn();
         //log.info(mvcResult.getResponse().getContentAsString());
         Assert.assertEquals("save Success",
@@ -86,10 +87,12 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
     @SneakyThrows
     @Test
     public void test_getAllUser() {
-        content = MockMvcRequestBuilders.get("/getAllUser")
+        content = MockMvcRequestBuilders.get("/user/all_users")
                 .contentType(MediaType.APPLICATION_JSON_UTF8);
         MvcResult mvcResult = mvc.perform(content).andReturn();
         //log.info(mvcResult.getResponse().getContentAsString());
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200, status);
         Assert.assertTrue(mvcResult.getResponse().getContentLength() > 0);
     }
 
@@ -97,10 +100,9 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
     @Test
     public void test_findByUserName() {
         String userName = "da";
-        content = MockMvcRequestBuilders.post("/findByUserName")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(mapper.writeValueAsBytes(userName));
+        content = MockMvcRequestBuilders.get("/user/{userName}", userName)
+                .contentType(MediaType.APPLICATION_JSON_UTF8);
+
         MvcResult mvcResult = mvc.perform(content).andReturn();
         //log.info(mvcResult.getResponse().getContentAsString());
         Assert.assertTrue(mvcResult.getResponse().getContentLength() > 0);
@@ -109,18 +111,11 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
 
     @SneakyThrows
     @Test
-    public void test_deleUserById() {
-        int id = 1;
-        content = MockMvcRequestBuilders.post("/deleteUserById")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(mapper.writeValueAsBytes(id));
-        MvcResult mvcResult = mvc.perform(content).andReturn();
-        //log.info(mvcResult.getResponse().getContentAsString());
-        MsgAndData msgAndData = mapper.readValue(mvcResult.getResponse().getContentAsString(),
-                MsgAndData.class);
-        Assert.assertEquals("delete Success!", msgAndData.getMessage());
-
+    public void test_deleteUserById() {
+        MockHttpServletRequestBuilder delete = MockMvcRequestBuilders.delete("/user", 1);
+        MvcResult mvcResult = mvc.perform(delete).andReturn();
+        log.info(mvcResult.toString());
+        Assert.assertTrue(HttpMessageNotReadableException.class.isAssignableFrom(mvcResult.getResolvedException().getClass()));//错误的请求内容体
     }
 
     @SneakyThrows
@@ -132,7 +127,7 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
         user.setUserPassword("test");
         user.setEmail("test@mail.cn");
 
-        content = MockMvcRequestBuilders.post("/update")
+        content = MockMvcRequestBuilders.put("/user")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsBytes(user));

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 /**
  * @program: springboot_demo
  * @description: params for page
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Data//get,set方法
 @AllArgsConstructor//全参构造
 @NoArgsConstructor//无参构造
-public class PageParam {
+public class PageParam implements Serializable {
     private User user;
     @ApiModelProperty(value = "页码", name = "pageNum", example = "0")
     private Integer pageNum;

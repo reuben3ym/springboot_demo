@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private MsgAndData msgAndData;
     //初始化Jackson的ObjectMapper
-    private ObjectMapper mapper = new ObjectMapper();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     /**
      * @Description: 添加User
@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String save(User user) {
         //判断数据是否为空
+        //log.info(user.toString());
         if (isNull(user)) {
             return "No data received!";
         }
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getAll() {
         List<User> all = userDao.findAll();
-        String result = mapper.writeValueAsString(all);
+        String result=mapper.writeValueAsString(all);
         return result;
 
     }
@@ -91,8 +92,8 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     public String getByUserName(String name) {
-        String name_str = mapper.readValue(name, String.class);
-        List<User> byUserName = userDao.findByUserName(name_str);
+        //String name_str = mapper.readValue(name, String.class);
+        List<User> byUserName = userDao.findByUserName(name);
         String result = mapper.writeValueAsString(byUserName);
         return result;
     }
@@ -128,15 +129,19 @@ public class UserServiceImpl implements UserService {
     @Override
 
     /**
-    * @Description: Multiple delete批量删除
-    * @Param: [ids]
-    * @return: java.lang.String
-    */
+     * @Description: Multiple delete批量删除
+     * @Param: [ids]
+     * @return: java.lang.String
+     */
     public String multipleDeleteByUserId(List<Integer> ids) {
         List<String> results = new ArrayList<>();
-        for (Integer id : ids) {
-            results.add(this.deleteByUserId(id));
+        results.add("result");
+        if (0 != ids.size()) {
+            for (Integer id : ids) {
+                results.add(this.deleteByUserId(id));
+            }
         }
+
         String result = mapper.writeValueAsString(results);
         return result;
     }
@@ -228,8 +233,8 @@ public class UserServiceImpl implements UserService {
      */
     private Boolean isNull(User user) {
         boolean flag = false;
-        //log.info(user.toString());
-        if (null == user || null == user.getUserId() || 0 == user.getUserName().length()) {
+        //log.info("isnull"+user.toString());
+        if (null == user || 0 == user.getUserName().length()) {
             flag = true;
         }
         return flag;
