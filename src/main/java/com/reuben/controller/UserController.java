@@ -25,7 +25,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/testPost")
+    @PostMapping("/post_test")
     @ApiOperation(value = "post提交User", notes = "需要User作为参数", httpMethod = "POST")
     public String testPost(@ApiParam(value = "userName:用户名、userPassword:密码", required = true)
                            @RequestBody User user) {
@@ -33,7 +33,7 @@ public class UserController {
         return "Success! Hello!" + user.getUserName() + ",your password is:" + user.getUserPassword();
     }
 
-    @GetMapping("/getDefaultUser")
+    @GetMapping("/default_user")
     @ApiOperation(value = "获取默认user", notes = "无需参数", httpMethod = "GET")
     public User getDefaultUser() {
         return user_default;
