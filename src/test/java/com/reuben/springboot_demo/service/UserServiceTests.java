@@ -41,7 +41,7 @@ public class UserServiceTests extends SpringbootDemoApplicationTests {
     @Test
     //@Rollback(false)//默认开启rollback
     public void test_findAll() {
-        String all = userService.findAll();
+        String all = userService.getAll();
         log.info(all);
     }
 
@@ -50,7 +50,7 @@ public class UserServiceTests extends SpringbootDemoApplicationTests {
     @Test
     public void test_findByUserName() {
         String s = "reuben";
-        String reuben = userService.findByUserName(mapper.writeValueAsString(s));
+        String reuben = userService.getByUserName(mapper.writeValueAsString(s));
         log.info(reuben);
     }
 
@@ -78,7 +78,7 @@ public class UserServiceTests extends SpringbootDemoApplicationTests {
     public void test_findByPage() {
         PageParam pageParam = new PageParam();
 
-        Page<User> byPage = userService.findByPage(pageParam);
+        Page<User> byPage = userService.getByPage(pageParam);
         Assert.assertTrue(byPage.getSize() > 0);
     }
 

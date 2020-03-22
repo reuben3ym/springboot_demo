@@ -50,14 +50,14 @@ public class UserController {
     @GetMapping("/getAllUser")
     @ApiOperation(value = "获取所有User", notes = "无需参数", httpMethod = "GET")
     public String getAllUser() {
-        return userService.findAll();
+        return userService.getAll();
     }
 
     @PostMapping("/findByUserName")
     @ApiOperation(value = "通过userName获取User", notes = "需要userName作为参数", httpMethod = "POST")
     public String findByUserName(@ApiParam(value = "用户名", required = true)
                                  @RequestBody String name) {
-        return userService.findByUserName(name);
+        return userService.getByUserName(name);
     }
 
     @PostMapping("/findByUserId")
@@ -65,7 +65,7 @@ public class UserController {
     public String findByUserId(@ApiParam(value = "用户id", required = true)
                                @RequestBody Integer id) {
         //log.info(id.toString());
-        return userService.findByUserId(id);
+        return userService.getByUserId(id);
     }
 
     @PostMapping("/deleteUserById")
@@ -94,7 +94,7 @@ public class UserController {
     @ApiOperation(value = "条件查询（分页）", notes = "无条件时，参数留空（需要id查询请使用findByUserId)", httpMethod = "POST")
     public Page<User> findByPage(@ApiParam(value = "无条件时，参数留空（需要id查询请使用findByUserId)", required = true)
                                  @RequestBody PageParam pageParam) {
-        return userService.findByPage(pageParam);
+        return userService.getByPage(pageParam);
     }
 
 

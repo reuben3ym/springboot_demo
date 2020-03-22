@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         }
         //判断是否存在相同用户名
         if (!isExist(user.getUserName())) {
-            user.setIsdel("0");//默认未删除
+            user.setDel("0");//默认未删除
             userDao.save(user);
             return "save Success";
         } else return "Username already exists!";
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
-    public String findAll() {
+    public String getAll() {
         List<User> all = userDao.findAll();
         String result = mapper.writeValueAsString(all);
         return result;
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
-    public String findByUserId(Integer id) {
+    public String getByUserId(Integer id) {
         Optional<User> byId = userDao.findById(id);
         // log.info(byId.toString());
         String result = mapper.writeValueAsString(byId.get());
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
-    public String findByUserName(String name) {
+    public String getByUserName(String name) {
         String name_str = mapper.readValue(name, String.class);
         List<User> byUserName = userDao.findByUserName(name_str);
         String result = mapper.writeValueAsString(byUserName);
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
         } else {
             userDao.deleteByUserId(id);
             msgAndData.setMessage("delete Success!");
-            byId.get().setIsdel("1");
+            byId.get().setDel("1");
             msgAndData.setData(byId.get().toString());
 
         }
@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
      * @return: org.springframework.data.domain.Page<com.reuben.entity.User>
      */
     @Override
-    public Page<User> findByPage(PageParam pageParam) {
+    public Page<User> getByPage(PageParam pageParam) {
         //log.info(pageParam.toString());
         if (pageParam.getPageNum() == null) {
             pageParam.setPageNum(0);
@@ -197,8 +197,8 @@ public class UserServiceImpl implements UserService {
                 if (pageParam.getUser().getEmail() != null) {
                     pr.add(criteriaBuilder.like(root.get("email").as(String.class), "%" + pageParam.getUser().getEmail() + "%"));
                 }
-                if (pageParam.getUser().getIsdel() != null) {
-                    pr.add(criteriaBuilder.like(root.get("isdel").as(String.class), "%" + pageParam.getUser().getIsdel() + "%"));
+                if (pageParam.getUser().getDel() != null) {
+                    pr.add(criteriaBuilder.like(root.get("isdel").as(String.class), "%" + pageParam.getUser().getDel() + "%"));
                 }
             }
             return criteriaBuilder.and(pr.toArray(new Predicate[pr.size()]));

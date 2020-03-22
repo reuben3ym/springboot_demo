@@ -23,17 +23,17 @@ public interface UserService {
     /**
      * @Description: 查询所有
      */
-    String findAll();
+    String getAll();
 
     /**
      * @Description: 通过id查询
      */
-    String findByUserId(Integer id);
+    String getByUserId(Integer id);
 
     /**
      * @Description: 通过id查找
      */
-    String findByUserName(String name);
+    String getByUserName(String name);
 
     /**
      * @Description: 逻辑删除
@@ -53,5 +53,5 @@ public interface UserService {
     /**
      * @Description: 分页条件查询
      */
-    Page<User> findByPage(PageParam pageParam);
+    Page<User> getByPage(PageParam pageParam);
 }

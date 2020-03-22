@@ -16,7 +16,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
-import javax.sql.rowset.CachedRowSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,7 +70,7 @@ public class UserDaoTests extends SpringbootDemoApplicationTests {
         int ts_userId = 14;
         userDao.deleteByUserId(ts_userId);
         Optional<User> byId = userDao.findById(ts_userId);
-        Assert.assertEquals("1", byId.get().getIsdel());
+        Assert.assertEquals("1", byId.get().getDel());
     }
     /**
      * @Description: 测试批量删除
@@ -110,8 +109,8 @@ public class UserDaoTests extends SpringbootDemoApplicationTests {
                 if (pageParam.getUser().getEmail() != null) {
                     pr.add(criteriaBuilder.like(root.get("email").as(String.class), "%" + pageParam.getUser().getEmail() + "%"));
                 }
-                if (pageParam.getUser().getIsdel() != null) {
-                    pr.add(criteriaBuilder.like(root.get("isdel").as(String.class), "%" + pageParam.getUser().getIsdel() + "%"));
+                if (pageParam.getUser().getDel() != null) {
+                    pr.add(criteriaBuilder.like(root.get("isdel").as(String.class), "%" + pageParam.getUser().getDel() + "%"));
                 }
             }
             return criteriaBuilder.and(pr.toArray(new Predicate[pr.size()]));

@@ -51,13 +51,13 @@ public class User implements Serializable {
 
     @Column(name = "isdel")
     @ApiModelProperty(value = "逻辑删除，默认0",name = "isdel",example = "0",hidden = false)
-    private String isdel;//是否删除:1删除，0未删除
+    private String del;//是否删除:1删除，0未删除
 
 
     public User(@NotBlank String userName, @NotBlank String userPassword, @NotBlank @Email String email) {
         this.userName = userName;
         this.userPassword = userPassword;
         this.email = email;
-        this.isdel = "0";//默认0，未被删除
+        this.del = "0";//默认0，未被删除
     }
 }
