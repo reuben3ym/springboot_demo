@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
-    //配置Swagger信息apiInfo
+    /**配置Swagger信息apiInfo*/
     private ApiInfo apiInfo(){
         Contact contact = new Contact("reuben", "https://github.com/ReubenYm/", "yuanmaooooo@gmail.com");
         return new ApiInfo(
@@ -30,7 +30,7 @@ public class Swagger2Config {
         );
 
     }
-    //配置了Swagger的Docket的bean实例
+    /**配置了Swagger的Docket的bean实例*/
     @Bean
     public Docket docket(){
         return new Docket(DocumentationType.SWAGGER_2)

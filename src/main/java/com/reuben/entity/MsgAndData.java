@@ -13,9 +13,12 @@ import java.io.Serializable;
  * @author: reuben
  * @create: 2020-03-19 13:14
  **/
-@Data//get,set方法
-@AllArgsConstructor//全参构造
-@NoArgsConstructor//无参构造
+@Data
+/**get,set方法*/
+@AllArgsConstructor
+/**全参构造*/
+@NoArgsConstructor
+/**无参构造*/
 @Component
 public class MsgAndData implements Serializable {
     private String message;

@@ -46,7 +46,7 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
     @SneakyThrows
     @Test
     public void test_testPost() {
-        content = MockMvcRequestBuilders.post("/testPost")
+        content = MockMvcRequestBuilders.post("/post_test")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(user_json);
@@ -63,7 +63,7 @@ public class UserControllerTests extends SpringbootDemoApplicationTests {
     @SneakyThrows
     @Test
     public void test_getDefaultUser() {
-        String contentAsString = mvc.perform(MockMvcRequestBuilders.get("/getDefaultUser"))
+        String contentAsString = mvc.perform(MockMvcRequestBuilders.get("/default_user"))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
         //log.info(contentAsString);
         String expect = mapper.writeValueAsString(user_default);

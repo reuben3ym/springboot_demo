@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * @author reuben
  * @program: springboot_demo
  **/
 @Component
@@ -32,7 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MsgAndData msgAndData;
-    //初始化Jackson的ObjectMapper
+    /**
+     * 初始化Jackson的ObjectMapper
+     */
     private static ObjectMapper mapper = new ObjectMapper();
 
     /**
@@ -42,17 +45,19 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public String save(User user) {
-        //判断数据是否为空
-        //log.info(user.toString());
+        /**判断数据是否为空*/
         if (isNull(user)) {
             return "No data received!";
         }
-        //判断是否存在相同用户名
+        /**判断是否存在相同用户名*/
         if (!isExist(user.getUserName())) {
-            user.setDel("0");//默认未删除
+            /**默认未删除*/
+            user.setDel("0");
             userDao.save(user);
             return "save Success";
-        } else return "Username already exists!";
+        } else {
+            return "Username already exists!";
+        }
 
     }
 
@@ -65,7 +70,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getAll() {
         List<User> all = userDao.findAll();
-        String result=mapper.writeValueAsString(all);
+        String result = mapper.writeValueAsString(all);
         return result;
 
     }
@@ -79,7 +84,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getByUserId(Integer id) {
         Optional<User> byId = userDao.findById(id);
-        // log.info(byId.toString());
         String result = mapper.writeValueAsString(byId.get());
         return result;
     }
@@ -92,7 +96,6 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     public String getByUserName(String name) {
-        //String name_str = mapper.readValue(name, String.class);
         List<User> byUserName = userDao.findByUserName(name);
         String result = mapper.writeValueAsString(byUserName);
         return result;
@@ -106,10 +109,9 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     public String deleteByUserId(Integer id) {
-        Optional<User> byId = userDao.findById(id);//通过id查询是否存在
-        //log.info(String.valueOf(byId.isPresent()));
+        /**通过id查询是否存在*/
+        Optional<User> byId = userDao.findById(id);
 
-        //将返回结果封装到msgAndData
         if (!byId.isPresent()) {
             msgAndData.setMessage("User not exist!");
         } else {
@@ -119,7 +121,7 @@ public class UserServiceImpl implements UserService {
             msgAndData.setData(byId.get().toString());
 
         }
-        //json格式化
+        /**json格式化*/
         String result = mapper.writeValueAsString(msgAndData);
         return result;
 
@@ -154,7 +156,6 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     public String update(User user) {
-        //log.info(user.toString());
         if (isNull(user)) {
             return "No data received!";
         }
@@ -180,7 +181,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Page<User> getByPage(PageParam pageParam) {
-        //log.info(pageParam.toString());
         if (pageParam.getPageNum() == null) {
             pageParam.setPageNum(0);
         }
@@ -233,7 +233,6 @@ public class UserServiceImpl implements UserService {
      */
     private Boolean isNull(User user) {
         boolean flag = false;
-        //log.info("isnull"+user.toString());
         if (null == user || 0 == user.getUserName().length()) {
             flag = true;
         }

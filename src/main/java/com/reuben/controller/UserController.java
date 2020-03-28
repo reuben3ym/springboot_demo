@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+/**
+ * @author reuben
+ */
 @RestController("api")
 @Api(tags = "User相关api")
 @Validated
 @Slf4j
 public class UserController {
     @Autowired
-    private User user_default;
+    private User userDefault;
 
     @Autowired
     private UserService userService;
@@ -36,7 +39,7 @@ public class UserController {
     @GetMapping("/default_user")
     @ApiOperation(value = "获取默认user", notes = "无需参数", httpMethod = "GET")
     public User getDefaultUser() {
-        return user_default;
+        return userDefault;
     }
 
 
@@ -64,7 +67,7 @@ public class UserController {
     @GetMapping("user")
     @ApiOperation(value = "通过userId获取User", notes = "需要userId作为参数", httpMethod = "GET")
     public String findByUserId(Integer id) {
-        //log.info(id.toString());
+
         return userService.getByUserId(id);
     }
 

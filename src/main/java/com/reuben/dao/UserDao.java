@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
+/**
+ * @author reuben
+ */
 public interface UserDao extends JpaRepository<User, Integer> {
 
 
@@ -48,10 +51,15 @@ public interface UserDao extends JpaRepository<User, Integer> {
             "user_password=:user_password,email=:email " +
             "where id=:id")
     void update(@Param("id") Integer id,
-                @Param("user_name") String user_name,
-                @Param("user_password") String user_password,
+                @Param("user_name") String userName,
+                @Param("user_password") String userPassword,
                 @Param("email") String email);
 
-    //分页查询
+
+    /**
+    * @Description:  分页查询
+    * @Param:  [spec,pageable]
+    * @return:  Page<User>
+    */
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 }
