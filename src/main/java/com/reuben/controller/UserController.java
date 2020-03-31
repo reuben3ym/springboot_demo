@@ -92,8 +92,8 @@ public class UserController {
         return userService.update(user);
     }
 
-    @GetMapping("/pagination")
-    @ApiOperation(value = "条件查询（分页）", notes = "无条件时，参数留空（需要id查询请使用findByUserId)", httpMethod = "GET")
+    @PostMapping("/pagination")
+    @ApiOperation(value = "条件查询（分页）", notes = "无条件时，参数留空（需要id查询请使用findByUserId)", httpMethod = "POST")
     public Page<User> findByPage(@ApiParam(value = "无条件时，参数留空（需要id查询请使用findByUserId)", required = true)
                                  @RequestBody PageParam pageParam) {
         return userService.getByPage(pageParam);

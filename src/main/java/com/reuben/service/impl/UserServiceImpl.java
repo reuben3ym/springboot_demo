@@ -6,9 +6,11 @@ import com.reuben.entity.PageParam;
 import com.reuben.entity.User;
 import com.reuben.entity.MsgAndData;
 import com.reuben.service.UserService;
+import com.reuben.util.annotation.cache.CacheRemove;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
      * @return: java.lang.String
      */
     @Override
+    @CachePut(value = "user", key = "'user'.concat(#user.userName.toString())")
     public String save(User user) {
         /**判断数据是否为空*/
         if (isNull(user)) {
@@ -54,7 +57,9 @@ public class UserServiceImpl implements UserService {
             /**默认未删除*/
             user.setDel("0");
             userDao.save(user);
-            return "save Success";
+            String byUserName = this.getByUserName(user.getUserName());
+/**           return "save Success";*/
+            return byUserName;
         } else {
             return "Username already exists!";
         }
@@ -68,6 +73,7 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
+    @CachePut(value = "user", key = "'user'.concat(new String('all'))")
     public String getAll() {
         List<User> all = userDao.findAll();
         String result = mapper.writeValueAsString(all);
@@ -82,6 +88,7 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
+    @Cacheable(value = "user", key = "'user'.concat(#id.toString())")
     public String getByUserId(Integer id) {
         Optional<User> byId = userDao.findById(id);
         String result = mapper.writeValueAsString(byId.get());
@@ -95,6 +102,7 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
+    @Cacheable(value = "user", key = "'user'.concat(#name.toString())")
     public String getByUserName(String name) {
         List<User> byUserName = userDao.findByUserName(name);
         String result = mapper.writeValueAsString(byUserName);
@@ -102,12 +110,13 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * @Description:
+     * @Description:deleteByUserId
      * @Param: [id]
      * @return: java.lang.String
      */
     @SneakyThrows
     @Override
+    @CacheEvict(value = "user", key = "'user'.concat(#id.toString())", beforeInvocation = true)
     public String deleteByUserId(Integer id) {
         /**通过id查询是否存在*/
         Optional<User> byId = userDao.findById(id);
@@ -127,14 +136,15 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @SneakyThrows
-    @Override
 
     /**
      * @Description: Multiple delete批量删除
      * @Param: [ids]
      * @return: java.lang.String
      */
+    @SneakyThrows
+    @Override
+    @CacheRemove({"user::*"})
     public String multipleDeleteByUserId(List<Integer> ids) {
         List<String> results = new ArrayList<>();
         results.add("result");
@@ -155,6 +165,7 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
+    @CachePut(value = "user", key = "'user'.concat(#user.userId.toString())")
     public String update(User user) {
         if (isNull(user)) {
             return "No data received!";
@@ -203,7 +214,7 @@ public class UserServiceImpl implements UserService {
                     pr.add(criteriaBuilder.like(root.get("email").as(String.class), "%" + pageParam.getUser().getEmail() + "%"));
                 }
                 if (pageParam.getUser().getDel() != null) {
-                    pr.add(criteriaBuilder.like(root.get("isdel").as(String.class), "%" + pageParam.getUser().getDel() + "%"));
+                    pr.add(criteriaBuilder.like(root.get("del").as(String.class), "%" + pageParam.getUser().getDel() + "%"));
                 }
             }
             return criteriaBuilder.and(pr.toArray(new Predicate[pr.size()]));
