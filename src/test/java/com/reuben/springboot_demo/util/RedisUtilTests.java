@@ -68,20 +68,20 @@ public class RedisUtilTests extends SpringbootDemoApplicationTests {
         Assert.assertTrue(set);
     }
 
-    @Test
+/*    @Test
     public void increase() {
         Integer delta = 2;
         long increase = redisUtil.increase("list", delta);
         log.info(String.valueOf(increase));
 
-    }
+    }*/
 
-    @Test
+/*    @Test
     public void decrease() {
         Integer delta = 2;
         long decrease = redisUtil.decrease("list", delta);
         log.info(String.valueOf(decrease));
-    }
+    }*/
 
     @Test
     public void getHash() {
